@@ -54,10 +54,11 @@ class PdoGsb{
  * @return l'id, le nom et le prénom sous la forme d'un tableau associatif 
 */
 	public function getInfosVisiteur($login, $mdp){
-		$req = "select visiteur.id as id, visiteur.nom as nom, visiteur.prenom as prenom from visiteur 
-		where visiteur.login='$login' and visiteur.mdp='$mdp'";
+		$req = "select id, nom, prenom
+			from visiteur 
+			where loginv like '$login' and mdp like '$mdp'";
 		$rs = PdoGsb::$monPdo->query($req);
-		$ligne = $rs->fetch();
+		$ligne = $rs->fetchAll(PDO::FETCH_ASSOC)[0];
 		return $ligne;
 	}
 
@@ -298,16 +299,33 @@ class PdoGsb{
 	}
 
 /**
- *Obtiens le grade de la personne au format String
+ *Obtiens le grade de la personne dans un tableau
  *
  *@param $idVisiteur
  */
-	public function getGrade($idVisieur){
-		$req = "select r.libelle as grade
+	public function getGrade($idVisiteur){
+		$req = "select r.id, r.libelle as nom
 			from visiteur v, rolevisiteur r 
 			where v.id ='$idVisiteur' and v.idRole = r.id";
 		$res = PdoGsb::$monPdo->query($req);
-		$laLigne = $res->fetch()['grade'];
+		$laLigne = $res->fetchAll(PDO::FETCH_ASSOC)[0];
+		return $laLigne;
+	}
+/**
+ *Obtiens le grade inférieur dans un tableau
+ *
+ *@param $idGrade
+ */
+	public function getGradeInferieur($idGrade){
+		if($idGrade > 1){ // si grade > "Visiteur"
+			$req = "select libelle as nom
+				from rolevisiteur
+				where id = '$idGrade'";
+			$res = PdoGsb::$monPdo->query($req);
+			$laLigne = $res->fetchAll(PDO::FETCH_ASSOC)[0];
+		}else{
+			$laLigne = 0;
+		}
 		return $laLigne;
 	}
 }
