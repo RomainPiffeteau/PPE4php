@@ -296,14 +296,19 @@ class PdoGsb{
 		where fichefrais.idvisiteur ='$idVisiteur' and fichefrais.mois = '$mois'";
 		PdoGsb::$monPdo->exec($req);
 	}
-}
 
 /**
  *Obtiens le grade de la personne au format String
  *
  *@param $idVisiteur
  */
- public function getGrade($idVisieur){
- 
- }
+	public function getGrade($idVisieur){
+		$req = "select r.libelle as grade
+			from visiteur v, rolevisiteur r 
+			where v.id ='$idVisiteur' and v.idRole = r.id";
+		$res = PdoGsb::$monPdo->query($req);
+		$laLigne = $res->fetch()['grade'];
+		return $laLigne;
+	}
+}
 ?>
