@@ -328,5 +328,22 @@ class PdoGsb{
 		}
 		return $laLigne;
 	}
+/**
+ *Obtiens la liste des dossiers de réparation pour l'utilisateur
+ *
+ *@param $idVisiteur
+ */
+	public function getMesReparations($idVisiteur){
+		$req = "select d.idEquipement, d.idTypePanne, d.jour as jourDemande, p.jour as jourPriseEnCharge, p.prix, p.dateFinR, dateFinT
+			from declarer d
+			left join priseencharge p
+			on d.idEquipement = p.idEquipement
+			and d.idTypePanne = p.idTypePanne
+			where d.idVisiteur = '$idVisiteur'
+			order by d.jour DESC";
+		$res = PdoGsb::$monPdo->query($req);
+		$reparations = $res->fetchAll(PDO::FETCH_ASSOC);
+		return $reparations;
+	}
 }
 ?>

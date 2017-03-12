@@ -12,10 +12,10 @@
 		<?php
 		$grade = $pdo->getGrade($_SESSION['idVisiteur']);
 		?>
-		<?=$grade['nom']?>:
+		<?=$_SESSION['prenom']?> <?=$_SESSION['nom']?><br>
+		(<?=$grade['nom']?>)
+		<br><br>
 		
-		<br>
-		<?php echo $_SESSION['prenom']."  ".$_SESSION['nom']  ?>
 		</li>
 		<li class="smenu">
 			<a href="index.php?uc=gererFrais&action=saisirFrais" title="Saisie fiche de frais">Saisie fiche de frais</a>

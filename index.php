@@ -22,6 +22,10 @@ switch($uc){
 		include("controleurs/c_etatFrais.php");
 		break; 
 	}
+	case 'reparation' :{
+		include("controleurs/c_reparation.php");
+		break; 
+	}
 }
 include("vues/v_pied.php") ;
 ?>
