@@ -304,7 +304,7 @@ class PdoGsb{
  *@param $idVisiteur
  */
 	public function getGrade($idVisiteur){
-		$req = "select r.id, r.libelle as nom
+		$req = "select r.id, r.libelle
 			from visiteur v, rolevisiteur r 
 			where v.id ='$idVisiteur' and v.idRole = r.id";
 		$res = PdoGsb::$monPdo->query($req);
@@ -318,13 +318,13 @@ class PdoGsb{
  */
 	public function getGradeInferieur($idGrade){
 		if($idGrade > 1){ // si grade > "Visiteur"
-			$req = "select libelle as nom
+			$req = "select libelle
 				from rolevisiteur
-				where id = '$idGrade'";
+				where id = ".($idGrade-1);
 			$res = PdoGsb::$monPdo->query($req);
 			$laLigne = $res->fetchAll(PDO::FETCH_ASSOC)[0];
 		}else{
-			$laLigne = 0;
+			$laLigne['libelle'] = 'GRADE INVALIDE';
 		}
 		return $laLigne;
 	}
@@ -333,17 +333,36 @@ class PdoGsb{
  *
  *@param $idVisiteur
  */
-	public function getMesReparations($idVisiteur){
-		$req = "select d.idEquipement, d.idTypePanne, d.jour as jourDemande, p.jour as jourPriseEnCharge, p.prix, p.dateFinR, dateFinT
+	public function getReparations($idVisiteur){
+		$req = "select d.idEquipement, d.idTypePanne, d.jour, p.prix, p.dateFinR, p.dateFinT
 			from declarer d
 			left join priseencharge p
 			on d.idEquipement = p.idEquipement
 			and d.idTypePanne = p.idTypePanne
+			and d.jour = p.jour
 			where d.idVisiteur = '$idVisiteur'
-			order by d.jour DESC";
+			order by (p.prix IS NOT NULL), d.jour DESC";
 		$res = PdoGsb::$monPdo->query($req);
 		$reparations = $res->fetchAll(PDO::FETCH_ASSOC);
+		foreach($reparations as &$r){
+			$r['equipement'] = PdoGsb::$monPdo->query("SELECT libelle FROM typeequipement te, equipement e WHERE e.idType = te.id AND e.id = ".$r['idEquipement'])->fetchAll(PDO::FETCH_ASSOC)[0]['libelle'];
+			$r['typePanne'] = PdoGsb::$monPdo->query("SELECT naturePanne FROM typepanne tp, declarer d WHERE d.idTypePanne = tp.id AND d.jour = '".$r['jour']."' AND d.idEquipement = ".$r['idEquipement'])->fetchAll(PDO::FETCH_ASSOC)[0]['naturePanne'];
+		}
 		return $reparations;
+	}
+/**
+ *Obtiens la liste des personnes à charge de l'utilisateur
+ *
+ *@param $idVisiteur
+ */
+	public function getPersonnesACharge($idChef){
+		$req = "select v.id, v.nom, v.prenom
+			from visiteur v, lienvisiteur lv
+			where lv.idChef = '$idChef'
+			and lv.idVisiteur = v.id";
+		$res = PdoGsb::$monPdo->query($req);
+		$personnes = $res->fetchAll(PDO::FETCH_ASSOC);
+		return $personnes;
 	}
 }
 ?>

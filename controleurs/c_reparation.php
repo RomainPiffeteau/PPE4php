@@ -4,15 +4,20 @@ $action = $_REQUEST['action'];
 $idVisiteur = $_SESSION['idVisiteur'];
 switch($action){
 	case 'visualiser':{
-		$mesReparations=$pdo->getMesReparations($idVisiteur);
+		$mesReparations=$pdo->getReparations($idVisiteur);
 		include("vues/v_visualiserReparations.php");
 		break;
 	}
+	case 'prisesEnCharge':
+		$mesPersonnesACharge = $pdo->getPersonnesACharge($_SESSION['idVisiteur']);
+		include("vues/v_personnesACharge.php");
+		break;
 	case 'ajouter':{
 		//TODO
 		?>
 		Cette Page est en cours de construction
 		<?php
+		break;
 	}
 }
 ?>

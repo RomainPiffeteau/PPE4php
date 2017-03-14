@@ -13,7 +13,7 @@
 		$grade = $pdo->getGrade($_SESSION['idVisiteur']);
 		?>
 		<?=$_SESSION['prenom']?> <?=$_SESSION['nom']?><br>
-		(<?=$grade['nom']?>)
+		(<?=$grade['libelle']?>)
 		<br><br>
 		
 		</li>
@@ -30,10 +30,10 @@
 			<a href="index.php?uc=reparation&action=visualiser" title="Visualiser mes demandes de réparation">Visualiser mes demandes de réparation</a>
 		</li>
 		<?php
-		if($grade['nom'] != "Visiteur"){
+		if($grade['libelle'] != "Visiteur"){
 			?>
 			<li class="smenu">
-				<a href="index.php?uc=reparation&action=prisesEnCharge" title="Visualiser les prises en charge de mes <?=addslashes(getGradeInferieur($grade['id']))?>">Visualiser les prises en charge de mes <?=addslashes(getGradeInferieur($grade['id']))?></a>
+				<a href="index.php?uc=reparation&action=prisesEnCharge" title="Visualiser les prises en charge de mes <?=$pdo->getGradeInferieur($grade['id'])['libelle']?>s">Visualiser les prises en charge de mes <?=$pdo->getGradeInferieur($grade['id'])['libelle']?>s</a>
 			</li>
 			<?php
 		}

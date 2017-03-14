@@ -1,10 +1,17 @@
-﻿	<h3>Mes Demandes de Réparation</h3>
+﻿	<?php
+	$grade = $pdo->getGrade($_SESSION['idVisiteur']);
+	?>
+	<h3>Demandes de Réparation de mes <?=$pdo->getGradeInferieur($grade['id'])['libelle']?>s à Charge :</h3>
 	<div class="encadre">
 		<?php
-			if(count($mesReparations) > 0){
-				?>
+		if(count($mesPersonnesACharge)>0){
+			foreach($mesPersonnesACharge as $linePAC){
+				$reparations = getReparations($linePAC['id']);
+				if(count($reparations)>0){
+					?>
 					<table class="listeLegere">
-						<tr>	
+						<caption><?=$linePAC['nom']?> <?=$linePAC['prenom']?></caption>
+						<tr>
 							<th>Equipement</th>
 							<th>Type de Panne</th>
 							<th>Date de la demande</th>
@@ -13,7 +20,7 @@
 							<th>Échéance Réelle</th>
 						</tr>
 						<?php
-						foreach($mesReparations as $lineReparation){
+						foreach($reparations as $lineReparation){
 							?>
 							<tr>
 								<td><?=$lineReparation['equipement']?></td>
@@ -30,10 +37,17 @@
 					<?php
 				}else{
 					?>
-					Vous n'avez aucune demande de réparation.
+					Cette personne n'a pas de demande de réparation.
 					<?php
 				}
-				?>
+				echo "<br><br>";
+			}
+		}else{
+			?>
+			Vous n'avez aucune personne à charge.
+			<?php
+		}
+		?>
 	</div>
 </div>
 
