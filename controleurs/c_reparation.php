@@ -18,6 +18,12 @@ switch($action){
 		Cette Page est en cours de construction
 		<?php
 		break;
+	case 'montantGlobal':
+		//TODO
+		?>
+		Cette Page est en cours de construction
+		<?php
+		break;
 	}
 }
 ?>

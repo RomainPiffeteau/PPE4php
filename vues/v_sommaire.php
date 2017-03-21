@@ -30,10 +30,17 @@
 			<a href="index.php?uc=reparation&action=visualiser" title="Visualiser mes demandes de réparation">Visualiser mes demandes de réparation</a>
 		</li>
 		<?php
-		if($grade['libelle'] != "Visiteur"){
+		if($grade['id'] > 0){
 			?>
 			<li class="smenu">
 				<a href="index.php?uc=reparation&action=prisesEnCharge" title="Visualiser les prises en charge de mes <?=$pdo->getGradeInferieur($grade['id'])['libelle']?>s">Visualiser les prises en charge de mes <?=$pdo->getGradeInferieur($grade['id'])['libelle']?>s</a>
+			</li>
+			<?php
+		}
+		if($grade['id'] == 3){
+			?>
+			<li class="smenu">
+				<a href="index.php?uc=reparation&action=montantGlobal" title="Visualiser le montant global des prises en charge">Visualiser le montant global des prises en charge</a>
 			</li>
 			<?php
 		}
