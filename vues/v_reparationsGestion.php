@@ -13,7 +13,7 @@
 			<?php
 			$grade = $pdo->getGrade($_SESSION['idVisiteur'])['id'];
 			if($grade == 2){
-				$lesReparations = $pdo->getReparationsParGrade($grade-1);
+				$lesReparations = $pdo->getReparationsParGrade(1);
 			}else{
 				$lesReparations = $pdo->getReparationsParGrade($grade);
 			}
