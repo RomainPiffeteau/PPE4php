@@ -27,8 +27,12 @@ switch($uc){
 		break; 
 	}
 	case 'equipement' :{
-	include("controleurs/c_equipement.php");
-	break;
+		include("controleurs/c_equipement.php");
+		break;
+	}
+	case 'accueil':{
+		include("vues/v_sommaire.php");
+		break;
 	}
 }
 include("vues/v_pied.php") ;

@@ -33,6 +33,9 @@
 		if($grade['id'] > 1){
 			?>
 			<li class="smenu">
+				<a href="index.php?uc=reparation&action=gestion" title="Gérer les demandes de réparation">Gérer les demandes de réparation</a>
+			</li>
+			<li class="smenu">
 				<a href="index.php?uc=reparation&action=prisesEnCharge" title="Visualiser les prises en charge de mes <?=$pdo->getGradeInferieur($grade['id'])['libelle']?>s">Visualiser les prises en charge de mes <?=$pdo->getGradeInferieur($grade['id'])['libelle']?>s</a>
 			</li>
 			<?php
