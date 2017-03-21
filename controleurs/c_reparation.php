@@ -20,5 +20,8 @@ switch($action){
 	case 'montantGlobal':
 		include("vues/v_reparationsMontantGlobal.php");
 		break;
+	case 'gestion':
+		include("vues/v_reparationsGestion.php");
+		break;
 }
 ?>

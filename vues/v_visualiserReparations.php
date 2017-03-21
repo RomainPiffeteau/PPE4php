@@ -16,9 +16,9 @@
 						foreach($mesReparations as $lineReparation){
 							?>
 							<tr>
-								<td><?=$lineReparation['equipement']?></td>
-								<td><?=$lineReparation['typePanne']?></td>
-								<td><?=$lineReparation['jour']?></td>
+								<td><?=$lineReparation['libelle']?></td>
+								<td><?=$lineReparation['naturePanne']?></td>
+								<td><?=$lineReparation['jourDemande']?></td>
 								<td><?php if(empty($lineReparation['prix'])) echo "/"; else echo $lineReparation['prix']."€" ?></td>
 								<td><?php if(empty($lineReparation['dateFinT'])) echo "/"; else echo $lineReparation['dateFinT'] ?></td>
 								<td><?php if(empty($lineReparation['dateFinR'])) echo "/"; else echo $lineReparation['dateFinR'] ?></td>
