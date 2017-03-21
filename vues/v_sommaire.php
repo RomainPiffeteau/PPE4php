@@ -29,6 +29,8 @@
 		<li class="smenu">
 			<a href="index.php?uc=reparation&action=visualiser" title="Visualiser mes demandes de réparation">Visualiser mes demandes de réparation</a>
 		</li>
+		<li class="smenu">
+			<a href="index.php?uc=reparation&action=visualiser" title="Visualiser les prix des demandes de réparations">Visualiser les prix des demandes de réparation</a>
 		<?php
 		if($grade['id'] > 0){
 			?>

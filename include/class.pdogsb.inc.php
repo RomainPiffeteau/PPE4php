@@ -359,5 +359,20 @@ class PdoGsb{
 		$personnes = $res->fetchAll(PDO::FETCH_ASSOC);
 		return $personnes;
 	}
+	
+/**
+*Obtiens la liste des prix des réparations
+*
+*@param $idVisiteur
+*/
+	public function getPrixReparations($idVisiteur){
+	$req = "SELECT v.id, v.nom, e.id, p.jourDemande, p.jourPriseEnCharge, p.prix, p.majoration, p.commentaire
+			FROM visiteur v, equipement e, panne p
+			WHERE v.id = p.idVisiteur
+			AND v.id = e.idVisiteur";
+		$res = PdoGsb::$monPdo->query($req);
+		$mesPrixReparations = $res->fetchAll(PDO::FETCH_ASSOC);
+		return $mesPrixReparations;
+	}
 }
 ?>
