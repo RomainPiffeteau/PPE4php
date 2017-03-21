@@ -19,7 +19,7 @@ class PdoGsb{
       	private static $serveur='mysql:host=localhost';
       	private static $bdd='dbname=gsbjm';   		
       	private static $user='root' ;
-      	private static $mdp='' ;	
+      	private static $mdp='' ;
 		private static $monPdo;
 		private static $monPdoGsb=null;
 /**
@@ -334,20 +334,15 @@ class PdoGsb{
  *@param $idVisiteur
  */
 	public function getReparations($idVisiteur){
-		$req = "select d.idEquipement, d.idTypePanne, d.jour, p.prix, p.dateFinR, p.dateFinT
-			from declarer d
-			left join priseencharge p
-			on d.idEquipement = p.idEquipement
-			and d.idTypePanne = p.idTypePanne
-			and d.jour = p.jour
-			where d.idVisiteur = '$idVisiteur'
-			order by (p.prix IS NOT NULL), d.jour DESC";
+		$req = "SELECT p.jourDemande, p.jourPriseEnCharge, p.prix, p.dateFinTheorique, p.dateFinReelle, p.majoration, te.libelle, tp.naturePanne
+			FROM panne p, equipement e, typeEquipement te, typePanne tp
+			WHERE p.idEquipement = e.id
+			AND e.idType = te.id
+			AND p.idTypePanne = tp.id
+			AND p.idVisiteur = '$idVisiteur'
+			ORDER BY p.jourDemande DESC";
 		$res = PdoGsb::$monPdo->query($req);
 		$reparations = $res->fetchAll(PDO::FETCH_ASSOC);
-		foreach($reparations as &$r){
-			$r['equipement'] = PdoGsb::$monPdo->query("SELECT libelle FROM typeequipement te, equipement e WHERE e.idType = te.id AND e.id = ".$r['idEquipement'])->fetchAll(PDO::FETCH_ASSOC)[0]['libelle'];
-			$r['typePanne'] = PdoGsb::$monPdo->query("SELECT naturePanne FROM typepanne tp, declarer d WHERE d.idTypePanne = tp.id AND d.jour = '".$r['jour']."' AND d.idEquipement = ".$r['idEquipement'])->fetchAll(PDO::FETCH_ASSOC)[0]['naturePanne'];
-		}
 		return $reparations;
 	}
 /**
