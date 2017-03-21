@@ -26,6 +26,9 @@ switch($uc){
 		include("controleurs/c_reparation.php");
 		break; 
 	}
+	case 'accueil':
+		include("vues/v_sommaire.php");
+		break;
 }
 include("vues/v_pied.php") ;
 ?>

@@ -346,6 +346,24 @@ class PdoGsb{
 		return $reparations;
 	}
 /**
+ *Obtiens la liste des dossiers de réparation pour l'utilisateur
+ *
+ *@param $idVisiteur
+ */
+	public function getReparationsParGrade($grade){
+		$req = "SELECT p.id, p.jourDemande, p.jourPriseEnCharge, p.prix, p.dateFinTheorique, p.dateFinReelle, p.majoration, p.commentaire, te.libelle, tp.naturePanne, v.nom, v.prenom
+			FROM panne p, equipement e, typeEquipement te, typePanne tp, visiteur v
+			WHERE p.idEquipement = e.id
+			AND e.idType = te.id
+			AND p.idTypePanne = tp.id
+			AND p.idVisiteur = v.id
+			AND v.idRole <= '$grade'
+			ORDER BY p.jourDemande DESC";
+		$res = PdoGsb::$monPdo->query($req);
+		$reparations = $res->fetchAll(PDO::FETCH_ASSOC);
+		return $reparations;
+	}
+/**
  *Obtiens la liste des personnes à charge de l'utilisateur
  *
  *@param $idVisiteur
