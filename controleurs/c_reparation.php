@@ -10,7 +10,7 @@ switch($action){
 	}
 	case 'prisesEnCharge':
 		$mesPersonnesACharge = $pdo->getPersonnesACharge($_SESSION['idVisiteur']);
-		include("vues/v_personnesACharge.php");
+		include("vues/v_reparationsPersonnesACharge.php");
 		break;
 	case 'ajouter':{
 		//TODO
@@ -19,10 +19,7 @@ switch($action){
 		<?php
 		break;
 	case 'montantGlobal':
-		//TODO
-		?>
-		Cette Page est en cours de construction
-		<?php
+		include("vues/v_raparationsMontantGlobal.php");
 		break;
 	}
 }
