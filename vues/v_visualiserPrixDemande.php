@@ -1,3 +1,4 @@
+<div id="menuDroite">
 	<h3>Les prix de réparation</h3>
 	<div class="encadre">
 		<?php

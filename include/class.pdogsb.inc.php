@@ -58,8 +58,11 @@ class PdoGsb{
 			from visiteur 
 			where loginv like '$login' and mdp like '$mdp'";
 		$rs = PdoGsb::$monPdo->query($req);
-		$ligne = $rs->fetchAll(PDO::FETCH_ASSOC)[0];
-		return $ligne;
+		$ligne = $rs->fetchAll(PDO::FETCH_ASSOC);
+		if(count($ligne)>0)
+			return $ligne[0];
+		else
+			return null;
 	}
 
 /**

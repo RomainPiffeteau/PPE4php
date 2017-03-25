@@ -1,4 +1,5 @@
-﻿	<?php
+﻿<div id="menuDroite">
+	<?php
 	if($pdo->getGrade($_SESSION['idVisiteur'])['id'] == 1){
 		?>
 		<script>
