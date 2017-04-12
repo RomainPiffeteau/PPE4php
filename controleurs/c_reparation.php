@@ -7,6 +7,10 @@ switch($action){
 		$mesReparations=$pdo->getReparations($idVisiteur);
 		include("vues/v_visualiserReparations.php");
 		break;
+	case 'visualiserPrix':
+		$mesReparations=$pdo->getReparations($idVisiteur);
+		include("vues/v_visualiserPrixDemande.php");
+		break;
 	case 'prisesEnCharge':
 		$mesPersonnesACharge = $pdo->getPersonnesACharge($_SESSION['idVisiteur']);
 		include("vues/v_reparationsPersonnesACharge.php");
