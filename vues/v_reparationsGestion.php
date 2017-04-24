@@ -47,7 +47,7 @@
 							<td><?php if(empty($lineReparation['dateFinT'])) echo "/"; else echo $lineReparation['dateFinT'] ?></td>
 							<td><?php if(empty($lineReparation['dateFinR'])) echo "/"; else echo $lineReparation['dateFinR'] ?></td>
 							<td><?php if(empty($lineReparation['commentaire'])) echo "/"; else echo $lineReparation['commentaire'] ?></td>
-							<td><a href="./index.html?uc=reparation&action=validerDemande&id=<?=$lineReparation['id']?>"><img src="./img/valid.gif" alt="Valid" title="Accepter la demande"/></a> <a href="./index.html?uc=reparation&action=annulerDemande&id=<?=$lineReparation['id']?>"><img src="./img/cancel.gif" alt="Cancel" title="Refuser la demande"/></a></td>
+							<td><img src="./img/valid.gif" alt="Valid" title="Accepter la demande" onMouseOver="this.style.cursor = 'pointer';" onClick="if(confirm('Voulez-vous vraiment accepter la demande ?')) document.location.href='./index.html?uc=reparation&action=validerDemande&id=<?=$lineReparation['id']?>';"/> <img src="./img/cancel.gif" alt="Cancel" title="Refuser la demande" onMouseOver="this.style.cursor = 'pointer';" onClick="if(confirm('Voulez-vous vraiment refuser la demande ?')) document.location.href= './index.html?uc=reparation&action=annulerDemande&id=<?=$lineReparation['id']?>';"/></td>
 						</tr>
 						<?php
 					}
