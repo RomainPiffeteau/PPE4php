@@ -305,6 +305,7 @@ class PdoGsb{
  *Obtiens le grade de la personne dans un tableau
  *
  *@param $idVisiteur
+ *@return un tableau avec les champs 'id' et 'libelle'
  */
 	public function getGrade($idVisiteur){
 		$req = "select r.id, r.libelle
@@ -318,6 +319,7 @@ class PdoGsb{
  *Obtiens le grade inférieur dans un tableau
  *
  *@param $idGrade
+ *@return un tableau avec le champs 'libelle'
  */
 	public function getGradeInferieur($idGrade){
 		if($idGrade > 1){ // si grade > "Visiteur"
@@ -335,6 +337,7 @@ class PdoGsb{
  *Obtiens la liste des dossiers de réparation pour l'utilisateur
  *
  *@param $idVisiteur
+ *@return un tableau de réparations avec les champs 'id', 'jourDemande', 'jourPriseEnCharge', 'prix', 'dateFinTheorique', 'dateFinReelle', 'majoration', 'commentaire', 'libelle' et 'naturePanne'
  */
 	public function getReparations($idVisiteur){
 		$req = "SELECT  p.id, p.jourDemande, p.jourPriseEnCharge, p.prix, p.dateFinTheorique, p.dateFinReelle, p.majoration, p.commentaire, te.libelle, tp.naturePanne
@@ -349,9 +352,10 @@ class PdoGsb{
 		return $reparations;
 	}
 /**
- *Obtiens la liste des dossiers de réparation pour l'utilisateur
+ *Obtiens la liste des dossiers de réparation pour le grade
  *
- *@param $idVisiteur
+ *@param $grade
+ *@return un tableau de réparations avec les champs 'id', 'jourDemande', 'jourPriseEnCharge', 'prix', 'dateFinTheorique', 'dateFinReelle', 'majoration', 'commentaire', 'libelle', 'naturePanne', 'nom' et 'prenom'
  */
 	public function getReparationsParGrade($grade){
 		$req = "SELECT p.id, p.jourDemande, p.jourPriseEnCharge, p.prix, p.dateFinTheorique, p.dateFinReelle, p.majoration, p.commentaire, te.libelle, tp.naturePanne, v.nom, v.prenom
@@ -370,6 +374,7 @@ class PdoGsb{
  *Obtiens la liste des personnes à charge de l'utilisateur
  *
  *@param $idVisiteur
+ *@return un tableau de personnes avec les champs 'id', 'nom' et 'prenom'
  */
 	public function getPersonnesACharge($idChef){
 		$req = "select v.id, v.nom, v.prenom
@@ -385,9 +390,10 @@ class PdoGsb{
 *Obtiens la liste des prix des réparations
 *
 *@param $idVisiteur
+*@return un tableau avec les champs 'idVisiteur', 'nom', 'idEquiepement', 'jourDemande', 'jourPriseEnCharge', 'prix', 'majoration' et 'commentaire'
 */
 	public function getPrixReparations($idVisiteur){
-	$req = "SELECT v.id, v.nom, e.id, p.jourDemande, p.jourPriseEnCharge, p.prix, p.majoration, p.commentaire
+	$req = "SELECT v.id as idVisiteur, v.nom, e.id as idEquipement, p.jourDemande, p.jourPriseEnCharge, p.prix, p.majoration, p.commentaire
 			FROM visiteur v, equipement e, panne p
 			WHERE v.id = p.idVisiteur
 			AND v.id = e.idVisiteur";

@@ -33,7 +33,7 @@
 						<th>Échéance Prévue</th>
 						<th>Échéance Réelle</th>
 						<th>Commentaire</th>
-						<th>Valider / Annuler</th>
+						<th>Valider / Refuser</th>
 					</tr>
 					<?php
 					foreach($lesReparations as $lineReparation){
@@ -43,11 +43,15 @@
 							<td><?=$lineReparation['libelle']?></td>
 							<td><?=$lineReparation['naturePanne']?></td>
 							<td><?=$lineReparation['jourDemande']?></td>
-							<td><?php if(empty($lineReparation['prix'])) echo "/"; elseif(empty($lineReparation['majoration'])) echo $lineReparation['prix']."€"; else echo ($lineReparation['prix']*$lineReparation['majoration'])."€" ?></td>
-							<td><?php if(empty($lineReparation['dateFinT'])) echo "/"; else echo $lineReparation['dateFinT'] ?></td>
-							<td><?php if(empty($lineReparation['dateFinR'])) echo "/"; else echo $lineReparation['dateFinR'] ?></td>
-							<td><?php if(empty($lineReparation['commentaire'])) echo "/"; else echo $lineReparation['commentaire'] ?></td>
-							<td><img src="./img/valid.gif" alt="Valid" title="Accepter la demande" onMouseOver="this.style.cursor = 'pointer';" onClick="if(confirm('Voulez-vous vraiment accepter la demande ?')) document.location.href='./index.html?uc=reparation&action=validerDemande&id=<?=$lineReparation['id']?>';"/> <img src="./img/cancel.gif" alt="Cancel" title="Refuser la demande" onMouseOver="this.style.cursor = 'pointer';" onClick="if(confirm('Voulez-vous vraiment refuser la demande ?')) document.location.href= './index.html?uc=reparation&action=annulerDemande&id=<?=$lineReparation['id']?>';"/></td>
+							<?php if(empty($lineReparation['prix'])) echo "<td style=\"text-align: center;\">/</td>"; elseif(empty($lineReparation['majoration'])) echo "<td>".$lineReparation['prix']."€</td>"; else echo "<td>".($lineReparation['prix']*$lineReparation['majoration'])."€</td>" ?>
+							<?php if(empty($lineReparation['dateFinT'])) echo "<td style=\"text-align: center;\">/</td>"; else echo "<td>".$lineReparation['dateFinT']."</td>" ?>
+							<?php if(empty($lineReparation['dateFinR'])) echo "<td style=\"text-align: center;\">/</td>"; else echo "<td>".$lineReparation['dateFinR']."</td>" ?>
+							<?php if(empty($lineReparation['commentaire'])) echo "<td style=\"text-align: center;\">/</td>"; else echo "<td>".$lineReparation['commentaire']."</td>" ?>
+							<?php if(empty($lineReparation['dateFinT'])) {?>
+								<td><img src="./img/valid.gif" alt="Valid" title="Accepter la demande" onMouseOver="this.style.cursor = 'pointer';" onClick="if(confirm('Voulez-vous vraiment accepter la demande ?')) document.location.href='./index.html?uc=reparation&action=validerDemande&id=<?=$lineReparation['id']?>';"/> <img src="./img/cancel.gif" alt="Cancel" title="Refuser la demande" onMouseOver="this.style.cursor = 'pointer';" onClick="if(confirm('Voulez-vous vraiment refuser la demande ?')) document.location.href= './index.html?uc=reparation&action=annulerDemande&id=<?=$lineReparation['id']?>';"/></td>
+							<?php }else{ ?>
+								<td>Validée</td>
+							<?php } ?>
 						</tr>
 						<?php
 					}
