@@ -27,5 +27,15 @@ switch($action){
 	case 'gestion':
 		include("vues/v_reparationsGestion.php");
 		break;
+	case 'annulerDemande':
+		if($pdo->annulerReparation($_REQUEST['id']))
+			$msgReparation = "<p style=\"color: green;\">Réparation Annulée</p>";
+		else
+			$msgReparation = "<p style=\"color: red;\">Erreur d'annulation</p>";
+		include("vues/v_reparationsGestion.php");
+		break;
+	case 'validerDemande':
+		
+		break;
 }
 ?>

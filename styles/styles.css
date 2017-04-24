@@ -90,6 +90,10 @@ ul#menuList li {
     position:relative;
     margin:0px;
     padding:0px;
+	border-bottom: 1px solid gray;
+}
+ul#menuList li:last-child {
+	border-bottom: 0;
 }
 
 /* apparences des liens dans listes et sous-listes non numérotées */

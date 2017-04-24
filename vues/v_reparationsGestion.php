@@ -10,6 +10,11 @@
 	}else{
 		?>
 		<h3>Gestion des Demandes de Réparation</h3>
+		<?php
+		if(isset($msgReparation) && !empty($msgReparation)){
+			echo $msgReparation;
+		}
+		?>
 		<div class="encadre">
 			<?php
 			$grade = $pdo->getGrade($_SESSION['idVisiteur'])['id'];
@@ -47,11 +52,12 @@
 							<?php if(empty($lineReparation['dateFinT'])) echo "<td style=\"text-align: center;\">/</td>"; else echo "<td>".$lineReparation['dateFinT']."</td>" ?>
 							<?php if(empty($lineReparation['dateFinR'])) echo "<td style=\"text-align: center;\">/</td>"; else echo "<td>".$lineReparation['dateFinR']."</td>" ?>
 							<?php if(empty($lineReparation['commentaire'])) echo "<td style=\"text-align: center;\">/</td>"; else echo "<td>".$lineReparation['commentaire']."</td>" ?>
-							<?php if(empty($lineReparation['dateFinT'])) {?>
-								<td><img src="./img/valid.gif" alt="Valid" title="Accepter la demande" onMouseOver="this.style.cursor = 'pointer';" onClick="if(confirm('Voulez-vous vraiment accepter la demande ?')) document.location.href='./index.html?uc=reparation&action=validerDemande&id=<?=$lineReparation['id']?>';"/> <img src="./img/cancel.gif" alt="Cancel" title="Refuser la demande" onMouseOver="this.style.cursor = 'pointer';" onClick="if(confirm('Voulez-vous vraiment refuser la demande ?')) document.location.href= './index.html?uc=reparation&action=annulerDemande&id=<?=$lineReparation['id']?>';"/></td>
-							<?php }else{ ?>
-								<td>Validée</td>
-							<?php } ?>
+							<td>
+								<?php if(empty($lineReparation['dateFinT'])) {?><img src="./img/valid.gif" alt="Valid" title="Accepter la demande" onMouseOver="this.style.cursor = 'pointer';" onClick="if(confirm('Voulez-vous vraiment accepter la demande ?')) document.location.href='./index.php?uc=reparation&action=validerDemande&id=<?=$lineReparation['id']?>';"/> <img src="./img/cancel.gif" alt="Cancel" title="Refuser la demande" onMouseOver="this.style.cursor = 'pointer';" onClick="if(confirm('Voulez-vous vraiment refuser la demande ?')) document.location.href= './index.php?uc=reparation&action=annulerDemande&id=<?=$lineReparation['id']?>';"/>
+								<?php }else{ ?>
+									Validée
+								<?php } ?>
+							</td>
 						</tr>
 						<?php
 					}

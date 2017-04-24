@@ -351,6 +351,7 @@ class PdoGsb{
 		$reparations = $res->fetchAll(PDO::FETCH_ASSOC);
 		return $reparations;
 	}
+	
 /**
  *Obtiens la liste des dossiers de réparation pour le grade
  *
@@ -370,6 +371,7 @@ class PdoGsb{
 		$reparations = $res->fetchAll(PDO::FETCH_ASSOC);
 		return $reparations;
 	}
+	
 /**
  *Obtiens la liste des personnes à charge de l'utilisateur
  *
@@ -400,6 +402,18 @@ class PdoGsb{
 		$res = PdoGsb::$monPdo->query($req);
 		$mesPrixReparations = $res->fetchAll(PDO::FETCH_ASSOC);
 		return $mesPrixReparations;
+	}
+
+/**
+*annule une réparation
+*
+*@param $idReparation
+*@return un boolean indique le succès de la requête
+*/
+	public function annulerReparation($idReparation){
+	$req = "DELETE FROM panne WHERE id = $idReparation";
+		$req = PdoGSB::$monPdo->exec($req);
+		return ($req>0);
 	}
 }
 ?>
