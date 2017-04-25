@@ -7,6 +7,10 @@ switch($action){
 		$mesReparations=$pdo->getReparations($idVisiteur);
 		include("vues/v_visualiserReparations.php");
 		break;
+	case 'visualiserPrix':
+		$mesReparations=$pdo->getReparations($idVisiteur);
+		include("vues/v_visualiserPrixDemande.php");
+		break;
 	case 'prisesEnCharge':
 		$mesPersonnesACharge = $pdo->getPersonnesACharge($_SESSION['idVisiteur']);
 		include("vues/v_reparationsPersonnesACharge.php");
@@ -22,6 +26,24 @@ switch($action){
 		include("vues/v_reparationsMontantGlobal.php");
 		break;
 	case 'gestion':
+		include("vues/v_reparationsGestion.php");
+		break;
+	case 'annulerDemande':
+		if($pdo->annulerReparation($_REQUEST['id']))
+			$msgReparation = "<p style=\"color: green;\">Réparation >Refusée</p>";
+		else
+			$msgReparation = "<p style=\"color: red;\">Erreur de refus !</p>";
+		include("vues/v_reparationsGestion.php");
+		break;
+	case 'modifierDemande':
+		$laPanne = $pdo->getInfosPanne($_REQUEST['id']);
+		include("vues/v_reparationsModifierDemande.php");
+		break;
+	case 'validerDemande':
+		if($pdo->validerReparation($_REQUEST['idPanne'], $_REQUEST['dateFinTheorique'], $_REQUEST['dateFinReelle'], $_REQUEST['prix'], $_REQUEST['commentaire']))
+			$msgReparation = "<p style=\"color: green;\">Réparation validée</p>";
+		else
+			$msgReparation = "<p style=\"color: red;\">Erreur d'enregistrement !</p>";
 		include("vues/v_reparationsGestion.php");
 		break;
 }

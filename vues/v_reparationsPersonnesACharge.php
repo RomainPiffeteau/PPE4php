@@ -1,4 +1,5 @@
-﻿	<?php
+﻿<div id="menuDroite">
+	<?php
 	$grade = $pdo->getGrade($_SESSION['idVisiteur']);
 	?>
 	<h3>Demandes de Réparation de mes <?=$pdo->getGradeInferieur($grade['id'])['libelle']?>s à Charge :</h3>
