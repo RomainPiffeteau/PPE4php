@@ -1,5 +1,6 @@
 ﻿<?php
 $arrayEquip = $pdo->getEquipVisiteur($_SESSION['idVisiteur']);
+$arrayTypesPanne = $pdo->getTypesPanne();
 if(count($arrayEquip)>0){
 ?>
 <div id="menuDroite">
@@ -8,9 +9,10 @@ if(count($arrayEquip)>0){
 <form method='POST' action='index.php?uc=reparation&action=ajouter'>
 <table class='tabNonQuadrille'>
 <tr>
-	<td>Ajout d'une demande de réparation suite à une panne sur l'équipement :</td>
+	<td width="20%">Ajout d'une demande de réparation suite à une panne sur l'équipement :</td>
 	<td>
 		<select name='equipement'>
+		<option value = ""> Sélectionnez l'équipement concerné par la demande </option>
 			<?php
 			foreach($arrayEquip as $ligne)
 			{
@@ -24,22 +26,23 @@ if(count($arrayEquip)>0){
 <tr>
 	<td>Type de la panne :</td>
 				<td>
-					<input type='radio' name='typePanne' value=1> Dysfonctionnement occasionnel
-				
-				
-					<input type='radio' name='typePanne' value=2> Hors service
-				
-				
-					<input type='radio' name='typePanne' value=3> A reçu un choc
-				
-				
-					<input type='radio' name='typePanne' value=4> A besoin d'une révision
+				<select name='equipement'>
+				<option value =""> Sélectionnez un type de panne </option>
+			<?php
+			
+			foreach($arrayTypesPanne as $ligne)
+			{
+			echo '<option value ="'.$ligne['id'].'">'.$ligne['naturePanne'].'</option>';
+			}
+			?>
+		</select>
+					
 				</td>
 </tr>
 <tr>
 	<td>Commentaire sur la panne :</td>
 				<td>
-					<input type='text' name=commentaire size='100' maxlength='200'>
+					<textarea name=commentaire style="resize:vertical;width:300px"> </textarea>
 				</td>
 </tr>				
 
