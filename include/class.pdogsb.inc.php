@@ -16,17 +16,40 @@
 */
 
 class PdoGsb{
+
+      	private static $serveur='sqlsrv:Server=192.168.222.72';
+      	private static $bdd='Database=gsbjm';
+      	private static $user='P2017Piffeteau' ;
+      //private static $user='P2017Bouchez' ;
+      //private static $user='P2017Bourreau' ;
+      	private static $mdp='Password1' ;
+		private static $monPdo;
+		private static $monPdoGsb=null;
+
+    /*   private static $serveur='mysql:host=localhost';
+       private static $bdd='dbname=gsbjm';
+       private static $user='root' ;
+       private static $mdp='' ;
+   private static $monPdo;
+   private static $monPdoGsb=null;*/
+
+/**
+ * Constructeur privé, crée l'instance de PDO qui sera sollicitée
+ * pour toutes les méthodes de la classe
+ */
+
 	private static $serveur='mysql:host=localhost';
 	private static $bdd='dbname=gsbjm';
 	private static $user='root' ;
 	private static $mdp='' ;
 	private static $monPdo;
 	private static $monPdoGsb=null;
-	
+
 	/**
 	* Constructeur privé, crée l'instance de PDO qui sera sollicitée
 	* pour toutes les méthodes de la classe
 	*/
+
 	private function __construct(){
     	PdoGsb::$monPdo = new PDO(PdoGsb::$serveur.';'.PdoGsb::$bdd, PdoGsb::$user, PdoGsb::$mdp);
 		PdoGsb::$monPdo->query("SET CHARACTER SET utf8");
@@ -34,7 +57,7 @@ class PdoGsb{
 	public function _destruct(){
 		PdoGsb::$monPdo = null;
 	}
-	
+
 	/**
 	* Fonction statique qui crée l'unique instance de la classe
 	*
@@ -48,7 +71,7 @@ class PdoGsb{
 		}
 		return PdoGsb::$monPdoGsb;
 	}
-	
+
 	/**
 	* Retourne les informations d'un visiteur
 	*
@@ -67,7 +90,7 @@ class PdoGsb{
 		else
 			return null;
 	}
-	
+
 	/**
 	* Retourne sous forme d'un tableau associatif toutes les lignes de frais hors forfait
 	* concernées par les deux arguments
@@ -91,7 +114,7 @@ class PdoGsb{
 		}
 		return $lesLignes;
 	}
-	
+
 	/**
 	* Retourne le nombre de justificatif d'un visiteur pour un mois donné
 	*
@@ -105,7 +128,7 @@ class PdoGsb{
 		$laLigne = $res->fetch();
 		return $laLigne['nb'];
 	}
-	
+
 	/**
 	* Retourne sous forme d'un tableau associatif toutes les lignes de frais au forfait
 	* concernées par les deux arguments
@@ -124,7 +147,7 @@ class PdoGsb{
 		$lesLignes = $res->fetchAll();
 		return $lesLignes;
 	}
-	
+
 	/**
 	* Retourne tous les id de la table FraisForfait
 	*
@@ -136,7 +159,7 @@ class PdoGsb{
 		$lesLignes = $res->fetchAll();
 		return $lesLignes;
 	}
-	
+
 	/**
 	* Met à jour la table ligneFraisForfait pour un visiteur et
 	* un mois donné en enregistrant les nouveaux montants
@@ -157,7 +180,7 @@ class PdoGsb{
 		}
 
 	}
-	
+
 	/**
 	* met à jour le nombre de justificatifs de la table ficheFrais
 	* pour le mois et le visiteur concerné
@@ -170,7 +193,7 @@ class PdoGsb{
 		where fichefrais.idvisiteur = '$idVisiteur' and fichefrais.mois = '$mois'";
 		PdoGsb::$monPdo->exec($req);
 	}
-	
+
 	/**
 	* Teste si un visiteur possède une fiche de frais pour le mois passé en argument
 	*
@@ -189,7 +212,7 @@ class PdoGsb{
 		}
 		return $ok;
 	}
-	
+
 	/**
 	* Retourne le dernier mois en cours d'un visiteur
 	*
@@ -230,7 +253,7 @@ class PdoGsb{
 			PdoGsb::$monPdo->exec($req);
 		 }
 	}
-	
+
 	/**
 	* Crée un nouveau frais hors forfait pour un visiteur un mois donné
 	* à partir des informations fournies en paramètre
@@ -247,7 +270,7 @@ class PdoGsb{
 		values('','$idVisiteur','$mois','$libelle','$dateFr','$montant')";
 		PdoGsb::$monPdo->exec($req);
 	}
-	
+
 	/**
 	* Supprime le frais hors forfait dont l'id est passé en argument
 	*
@@ -257,7 +280,7 @@ class PdoGsb{
 		$req = "delete from lignefraishorsforfait where lignefraishorsforfait.id =$idFrais ";
 		PdoGsb::$monPdo->exec($req);
 	}
-	
+
 	/**
 	* Retourne les mois pour lesquel un visiteur a une fiche de frais
 	*
@@ -283,7 +306,7 @@ class PdoGsb{
 		}
 		return $lesMois;
 	}
-	
+
 	/**
 	* Retourne les informations d'une fiche de frais d'un visiteur pour un mois donné
 	*
@@ -299,7 +322,7 @@ class PdoGsb{
 		$laLigne = $res->fetch();
 		return $laLigne;
 	}
-	
+
 	/**
 	* Modifie l'état et la date de modification d'une fiche de frais
 	*
@@ -312,7 +335,7 @@ class PdoGsb{
 		where fichefrais.idvisiteur ='$idVisiteur' and fichefrais.mois = '$mois'";
 		PdoGsb::$monPdo->exec($req);
 	}
-	
+
 	/**
 	 *Obtiens le grade de la personne dans un tableau
 	 *
@@ -327,7 +350,7 @@ class PdoGsb{
 		$laLigne = $res->fetchAll(PDO::FETCH_ASSOC)[0];
 		return $laLigne;
 	}
-	
+
 	/**
 	 *Obtiens le grade inférieur dans un tableau
 	 *
@@ -346,7 +369,7 @@ class PdoGsb{
 		}
 		return $laLigne;
 	}
-	
+
 	/**
 	 *Obtiens la liste des dossiers de réparation pour l'utilisateur
 	 *
@@ -365,7 +388,7 @@ class PdoGsb{
 		$reparations = $res->fetchAll(PDO::FETCH_ASSOC);
 		return $reparations;
 	}
-	
+
 	/**
 	 *Obtiens la liste des dossiers de réparation pour le grade
 	 *
@@ -385,7 +408,7 @@ class PdoGsb{
 		$reparations = $res->fetchAll(PDO::FETCH_ASSOC);
 		return $reparations;
 	}
-	
+
 	/**
 	*Obtiens la liste des personnes à charge de l'utilisateur
 	*
@@ -401,7 +424,7 @@ class PdoGsb{
 		$personnes = $res->fetchAll(PDO::FETCH_ASSOC);
 		return $personnes;
 	}
-	
+
 	/**
 	*Obtiens la liste des prix des réparations
 	*
@@ -417,7 +440,7 @@ class PdoGsb{
 		$mesPrixReparations = $res->fetchAll(PDO::FETCH_ASSOC);
 		return $mesPrixReparations;
 	}
-	
+
 	/**
 	*annule une réparation
 	*
@@ -429,7 +452,7 @@ class PdoGsb{
 		$req = PdoGSB::$monPdo->exec($req);
 		return ($req>0);
 	}
-	
+
 	/**
 	*récupère les infos d'une réparation
 	*
@@ -448,7 +471,7 @@ class PdoGsb{
 		$mesPrixReparations = $res->fetchAll(PDO::FETCH_ASSOC);
 		return $mesPrixReparations[0];
 	}
-	
+
 	/**
 	*valide une réparation
 	*

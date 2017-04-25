@@ -82,7 +82,8 @@
 												if(isset($_POST['majoration'.$idPanne])){
 													try{
 														// Connexion à la BDD
-														$bdd = new PDO('mysql:host=localhost;dbname=gsbjm;charset=utf8', 'root', '');
+														// $bdd = new PDO('mysql:host=localhost;dbname=gsbjm;charset=utf8', 'root', '');
+														$bdd = new PDO('sqlsrv:Server=192.168.222.72;Database=gsbjm', 'P2017Piffeteau', 'Password1');
 														$majoration = $_POST['majoration'.$idPanne];
 														// Met à jour les données du tuple avec le taux de majoration ajouté par le visiteur
 														$bdd->exec('UPDATE panne SET majoration = '.$majoration.' where id = '.$idPanne);
