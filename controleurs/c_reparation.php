@@ -16,6 +16,7 @@ switch($action){
 		?>
 		Cette Page est en cours de construction
 		<?php
+		include("vues/v_ajoutReparation.php");
 		break;
 	case 'montantGlobal':
 		include("vues/v_reparationsMontantGlobal.php");

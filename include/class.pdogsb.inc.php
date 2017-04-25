@@ -61,6 +61,21 @@ class PdoGsb{
 		$ligne = $rs->fetchAll(PDO::FETCH_ASSOC)[0];
 		return $ligne;
 	}
+	
+/**
+ * Retourne les équipements d'un visiteur
+ * @param $idVisiteur
+ * @return les équipements associés au visiteur concerné sous la forme d'un tableau associatif
+*/
+	public function getEquipVisiteur($idVisiteur){
+	$req = "select libelle
+		from typeequipement
+		where equipement.idVisiteur=$idVisiteur
+		and equipement.idType=typeequipement.id";
+		$rs = PdoGsb::$monPdo->query($req);
+		$ligne = $rs->fechAll(PDO::FETCH_ASSOC)[0];
+		return $ligne;
+	}
 
 /**
  * Retourne sous forme d'un tableau associatif toutes les lignes de frais hors forfait
