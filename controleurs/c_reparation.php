@@ -27,5 +27,23 @@ switch($action){
 	case 'gestion':
 		include("vues/v_reparationsGestion.php");
 		break;
+	case 'annulerDemande':
+		if($pdo->annulerReparation($_REQUEST['id']))
+			$msgReparation = "<p style=\"color: green;\">Réparation >Refusée</p>";
+		else
+			$msgReparation = "<p style=\"color: red;\">Erreur de refus !</p>";
+		include("vues/v_reparationsGestion.php");
+		break;
+	case 'modifierDemande':
+		$laPanne = $pdo->getInfosPanne($_REQUEST['id']);
+		include("vues/v_reparationsModifierDemande.php");
+		break;
+	case 'validerDemande':
+		if($pdo->validerReparation($_REQUEST['idPanne'], $_REQUEST['dateFinTheorique'], $_REQUEST['dateFinReelle'], $_REQUEST['prix'], $_REQUEST['commentaire']))
+			$msgReparation = "<p style=\"color: green;\">Réparation validée</p>";
+		else
+			$msgReparation = "<p style=\"color: red;\">Erreur d'enregistrement !</p>";
+		include("vues/v_reparationsGestion.php");
+		break;
 }
 ?>
