@@ -1,62 +1,60 @@
-<?php
-$arrayEquip = $pdo->getEquipVisiteur($idVisiteur);
-echo"
-
-<h3>Ajouter une nouvelle demande de réparation</h3>
+ï»¿<?php
+$arrayEquip = $pdo->getEquipVisiteur($_SESSION['idVisiteur']);
+if(count($arrayEquip)>0){
+?>
+<div id="menuDroite">
+<h3>Ajouter une nouvelle demande de rÃ©paration</h3>
+<div id="encadre">
 <form method='POST' action='index.php?uc=reparation&action=ajouter'>
 <table class='tabNonQuadrille'>
 <tr>
-	<td>Ajout d'une demande de réparation suite à une panne</td>
+	<td>Ajout d'une demande de rÃ©paration suite Ã  une panne sur l'Ã©quipement :</td>
 	<td>
 		<select name='equipement'>
-		//liste déroulante de tous les équipements attribués à l'utilisateur courant
-			foreach($arrayEquip as $libelle)
+			<?php
+			foreach($arrayEquip as $ligne)
 			{
-			echo '<option value ="'.$libelle.'">'.$libelle.'</option>'
+			echo '<option value ="'.$ligne['id'].'">'.$ligne['libelle'].'</option>';
 			}
-				
+			?>
 		</select>
 			
 	</td>
-	<td>
-		<input type='text' name=etatOrigine size='30' maxlength='30'>
-	</td>
-	<td>
-		<input type='text' name=dateAchat size='15' maxlength='15'>
-	</td>
 </tr>
 <tr>
-	<td>Affectation</td>
-	<td>
-	//listedéroulante à faire de tous les visiteurs
-		<select name='visiteur'>
-			<option value="">Choisissez le visiteur</option>
-				<?php
-				foreach ($tab as $line){
-				?>
-				<option value="<?=$line['id']?>">
-					<?=$line['nom']?> <?=$line['prenom']?> </option>
-				<?php
-				}
-				?>
-			
-		
-		<select/>
-	</td>
-	<td>
-		<input type='text' name=
+	<td>Type de la panne :</td>
+				<td>
+					<input type='radio' name='typePanne' value=1> Dysfonctionnement occasionnel
+				
+				
+					<input type='radio' name='typePanne' value=2> Hors service
+				
+				
+					<input type='radio' name='typePanne' value=3> A reÃ§u un choc
+				
+				
+					<input type='radio' name='typePanne' value=4> A besoin d'une rÃ©vision
+				</td>
 </tr>
 <tr>
-	<td>Montant engage</td>
-	<td>
-		<input  type='text' name=montant  size='30' maxlength='45'>
-	</td>
-</tr>
+	<td>Commentaire sur la panne :</td>
+				<td>
+					<input type='text' name=commentaire size='100' maxlength='200'>
+				</td>
+</tr>				
 
 </table>
 <input type='submit' value='Valider' name='valider'>
          <input type='reset' value='Annuler' name='annuler'>
 
 </form>
-";
+</div>
+<?php
+}
+else {
 ?>
+<h3>Vous n'avez aucun Ã©quipement</h3>
+<?php
+}
+?>
+</div>

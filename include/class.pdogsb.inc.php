@@ -17,33 +17,25 @@
 
 class PdoGsb{
 
-      	private static $serveur='sqlsrv:Server=192.168.222.72';
+     /* 	private static $serveur='sqlsrv:Server=192.168.222.72';
       	private static $bdd='Database=gsbjm';
       	private static $user='P2017Piffeteau' ;
       //private static $user='P2017Bouchez' ;
       //private static $user='P2017Bourreau' ;
       	private static $mdp='Password1' ;
 		private static $monPdo;
-		private static $monPdoGsb=null;
+		private static $monPdoGsb=null;*/
+		
 
-    /*   private static $serveur='mysql:host=localhost';
+       private static $serveur='mysql:host=localhost';
        private static $bdd='dbname=gsbjm';
        private static $user='root' ;
        private static $mdp='' ;
    private static $monPdo;
-   private static $monPdoGsb=null;*/
+   private static $monPdoGsb=null;
 
-/**
- * Constructeur privé, crée l'instance de PDO qui sera sollicitée
- * pour toutes les méthodes de la classe
- */
 
-	private static $serveur='mysql:host=localhost';
-	private static $bdd='dbname=gsbjm';
-	private static $user='root' ;
-	private static $mdp='' ;
-	private static $monPdo;
-	private static $monPdoGsb=null;
+
 
 	/**
 	* Constructeur privé, crée l'instance de PDO qui sera sollicitée
@@ -97,14 +89,29 @@ class PdoGsb{
  * @return les équipements associés au visiteur concerné sous la forme d'un tableau associatif
 */
 	public function getEquipVisiteur($idVisiteur){
-	$req = "select libelle
-		from typeequipement
+	$req = "select libelle, equipement.id
+		from typeequipement, equipement
 		where equipement.idVisiteur=$idVisiteur
 		and equipement.idType=typeequipement.id";
 		$rs = PdoGsb::$monPdo->query($req);
-		$ligne = $rs->fechAll(PDO::FETCH_ASSOC)[0];
+		$ligne = $rs->fetchAll(PDO::FETCH_ASSOC);
 		return $ligne;
 	}
+	
+	/**
+ * Retourne les types de pannes
+ * @param $idVisiteur
+ * @return les équipements associés au visiteur concerné sous la forme d'un tableau associatif
+*/
+	public function getTypesPanne(){
+	$req = "select id, naturePanne
+		from typepanne
+		";
+		$rs = PdoGsb::$monPdo->query($req);
+		$ligne = $rs->fetchAll(PDO::FETCH_ASSOC);
+		return $ligne;
+	}
+	
 
 	/**
 	* Retourne sous forme d'un tableau associatif toutes les lignes de frais hors forfait
