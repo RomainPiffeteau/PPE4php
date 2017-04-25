@@ -464,7 +464,7 @@ class PdoGsb{
 			$req = PdoGSB::$monPdo->exec($req);
 			$nbLineAffect += $req;
 		}else{
-			$req = "UPDATE `panne` SET `dateFinReelle`='' WHERE `id`=$idPanne";
+			$req = "UPDATE `panne` SET `dateFinReelle`=NULL WHERE `id`=$idPanne";
 			$req = PdoGSB::$monPdo->exec($req);
 			$nbLineAffect += $req;
 		}
