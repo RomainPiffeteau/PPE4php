@@ -10,6 +10,7 @@
 				<!-- Affiche le nom des différentes colonnes de la table Panne -->
 					<table class="listeLegere">
 						<tr>
+							<th>Demandeur</th>
 							<th>Equipement</th>
 							<th>Type de Panne</th>
 							<th>Date de la demande</th>
@@ -28,6 +29,7 @@
 						foreach($mesReparations as $lineReparation){
 							?>
 							<tr>
+								<td><?=$lineReparation['nom']?> <?=$lineReparation['prenom']?></td>
 								<td><?=$lineReparation['libelle']?></td>
 								<td><?=$lineReparation['naturePanne']?></td>
 								<td><?=$lineReparation['jourDemande']?></td>
@@ -82,8 +84,8 @@
 												if(isset($_POST['majoration'.$idPanne])){
 													try{
 														// Connexion à la BDD
-														// $bdd = new PDO('mysql:host=localhost;dbname=gsbjm;charset=utf8', 'root', '');
-														$bdd = new PDO('sqlsrv:Server=192.168.222.72;Database=gsbjm', 'P2017Piffeteau', 'Password1');
+														 $bdd = new PDO('mysql:host=localhost;dbname=gsbjm;charset=utf8', 'root', '');
+														//$bdd = new PDO('sqlsrv:Server=192.168.222.72;Database=gsbjm', 'P2017Piffeteau', 'Password1');
 														$majoration = $_POST['majoration'.$idPanne];
 														// Met à jour les données du tuple avec le taux de majoration ajouté par le visiteur
 														$bdd->exec('UPDATE panne SET majoration = '.$majoration.' where id = '.$idPanne);
@@ -104,6 +106,8 @@
 							<?php
 						}
 						?>
+						
+
 					</table>
 					<?php
 				}else{

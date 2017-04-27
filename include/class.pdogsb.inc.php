@@ -396,12 +396,19 @@ class PdoGsb{
 	 *@return un tableau de réparations avec les champs 'id', 'jourDemande', 'jourPriseEnCharge', 'prix', 'dateFinTheorique', 'dateFinReelle', 'majoration', 'commentaire', 'libelle' et 'naturePanne'
 	 */
 	public function getReparations($idVisiteur){
-		$req = "SELECT  p.id, p.jourDemande, p.jourPriseEnCharge, p.prix, p.dateFinTheorique, p.dateFinReelle, p.majoration, p.commentaire, te.libelle, tp.naturePanne
-			FROM panne p, equipement e, typeEquipement te, typePanne tp
+		$req = "SELECT distinct p.id, p.jourDemande, p.jourPriseEnCharge, p.prix, p.dateFinTheorique, p.dateFinReelle, p.majoration, p.commentaire, te.libelle, tp.naturePanne, v.nom, v.prenom
+			FROM panne p, equipement e, typeEquipement te, typePanne tp, lienvisiteur lv, visiteur v
 			WHERE p.idEquipement = e.id
 			AND e.idType = te.id
 			AND p.idTypePanne = tp.id
 			AND p.idVisiteur = '$idVisiteur'
+			AND v.id = '$idVisiteur'
+			OR p.idEquipement = e.id
+			AND e.idType = te.id
+			AND p.idTypePanne = tp.id
+			AND lv.idVisiteur = p.idVisiteur
+			AND lv.idChef = '$idVisiteur'
+			AND v.id = lv.idVisiteur
 			ORDER BY p.jourDemande DESC";
 		$res = PdoGsb::$monPdo->query($req);
 		$reparations = $res->fetchAll(PDO::FETCH_ASSOC);
