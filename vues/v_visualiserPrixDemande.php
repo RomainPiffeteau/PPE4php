@@ -83,12 +83,10 @@
 												// Effectue l'ajout dans la BDD uniquement si le visiteur a entré une valeur dans le champ
 												if(isset($_POST['majoration'.$idPanne])){
 													try{
-														// Connexion à la BDD
-														 $bdd = new PDO('mysql:host=localhost;dbname=gsbjm;charset=utf8', 'root', '');
-														//$bdd = new PDO('sqlsrv:Server=192.168.222.72;Database=gsbjm', 'P2017Piffeteau', 'Password1');
+														//Récupération de la valeur entrée par l'utilisateur dans une variable
 														$majoration = $_POST['majoration'.$idPanne];
-														// Met à jour les données du tuple avec le taux de majoration ajouté par le visiteur
-														$bdd->exec('UPDATE panne SET majoration = '.$majoration.' where id = '.$idPanne);
+														// Met à jour les données du tuple avec le taux de majoration ajouté par le visiteur grâce à la méthode contenue dans le pdo
+														$pdo->updateMajoration($majoration, $idPanne);
 													}
 													catch(Exception $e){
 														die('Erreur : '.$e->getMessage());
@@ -106,7 +104,7 @@
 							<?php
 						}
 						?>
-						
+
 
 					</table>
 					<?php

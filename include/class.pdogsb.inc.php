@@ -25,7 +25,7 @@ class PdoGsb{
       	private static $mdp='Password1';
 		private static $monPdo;
 		private static $monPdoGsb=null;*/
-		
+
 
        private static $serveur='mysql:host=localhost';
        private static $bdd='dbname=gsbjm';
@@ -79,7 +79,7 @@ class PdoGsb{
 		else
 			return null;
 	}
-	
+
 /**
  * Retourne les équipements d'un visiteur
  * @param $idVisiteur
@@ -94,7 +94,7 @@ class PdoGsb{
 		$ligne = $rs->fetchAll(PDO::FETCH_ASSOC);
 		return $ligne;
 	}
-	
+
 	/**
  * Retourne les types de pannes
  * @param $idVisiteur
@@ -108,7 +108,7 @@ class PdoGsb{
 		$ligne = $rs->fetchAll(PDO::FETCH_ASSOC);
 		return $ligne;
 	}
-	
+
 
 	/**
 	* Retourne sous forme d'un tableau associatif toutes les lignes de frais hors forfait
@@ -414,6 +414,17 @@ class PdoGsb{
 		$reparations = $res->fetchAll(PDO::FETCH_ASSOC);
 		return $reparations;
 	}
+
+  /**
+   *Met à jour le champ majoration dans la base de données pour le tuple associé à l'idPanne donné en paramète
+   *@param $majoration, $idPanne
+   *@return un boolean indiquant le succès de la requête
+   */
+  public function updateMajoration($majoration, $idPanne){
+    $req = "UPDATE panne SET majoration = $majoration where id = $idPanne";
+    $req = PdoGSB::$monPdo->exec($req);
+		return ($req>0);
+  }
 
 	/**
 	 *Obtiens la liste des dossiers de réparation pour le grade
