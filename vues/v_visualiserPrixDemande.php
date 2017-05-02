@@ -21,7 +21,6 @@
 							<th>Majoration</th>
 							<th>Échéance Prévue</th>
 							<th>Échéance Réelle</th>
-							<th>Commentaire</th>
 						</tr>
 
 						<?php
@@ -99,7 +98,6 @@
 							 <td><?php if(empty($lineReparation['majoration'])) echo "/"; else echo $lineReparation['majoration'].'%'; ?></td>
 							 <td><?php if(empty($lineReparation['dateFinT'])) echo "/"; else echo $lineReparation['dateFinT'] ?></td>
 							 <td><?php if(empty($lineReparation['dateFinR'])) echo "/"; else echo $lineReparation['dateFinR'] ?></td>
-							 <td><?php if(empty($lineReparation['dateFinR'])) echo "/"; else echo $lineReparation['commentaire'] ?></td>
 							</tr>
 							<?php
 						}

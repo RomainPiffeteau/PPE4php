@@ -17,7 +17,7 @@
 
 class PdoGsb{
 
- 	private static $serveur='sqlsrv:Server=192.168.222.72';
+      	private static $serveur='sqlsrv:Server=192.168.222.72';
       	private static $bdd='Database=gsbjm';
       // private static $user='P2017Piffeteau' ;
          private static $user='P2017Bouchez' ;
@@ -396,7 +396,7 @@ class PdoGsb{
 	 *@return un tableau de réparations avec les champs 'id', 'jourDemande', 'jourPriseEnCharge', 'prix', 'dateFinTheorique', 'dateFinReelle', 'majoration', 'commentaire', 'libelle' et 'naturePanne'
 	 */
 	public function getReparations($idVisiteur){
-		$req = "SELECT distinct p.id, p.jourDemande, p.jourPriseEnCharge, p.prix, p.dateFinTheorique, p.dateFinReelle, p.majoration, p.commentaire, te.libelle, tp.naturePanne, v.nom, v.prenom
+		$req = "SELECT distinct p.id, p.jourDemande, p.jourPriseEnCharge, p.prix, p.dateFinTheorique, p.dateFinReelle, p.majoration, te.libelle, tp.naturePanne, v.nom, v.prenom
 			FROM panne p, equipement e, typeEquipement te, typePanne tp, lienvisiteur lv, visiteur v
 			WHERE p.idEquipement = e.id
 			AND e.idType = te.id
