@@ -17,9 +17,9 @@ switch($action){
 		break;
 	case 'ajouter':
 		include("vues/v_ajoutReparation.php");
-		$equipementPanne = $_POST['equipement'];
-		$typePanne = $_POST['typePanne'];
-		$commentaire = $_POST['commentaire'];
+		$equipementPanne = isset($_POST['equipement']) ? $_POST['equipement'] : NULL;
+		$typePanne = isset($_POST['typePanne']) ? $_POST['typePanne'] : NULL;
+		$commentaire = isset($_POST['commentaire']) ? $_POST['commentaire'] : NULL;
 		$dateDemande = date("Y-m-d");
 		$pdo->addReparation($idVisiteur,$equipementPanne,$typePanne,$commentaire,$dateDemande);
 		break;

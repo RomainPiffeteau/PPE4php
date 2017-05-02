@@ -11,7 +11,7 @@ if(count($arrayEquip)>0){
 <tr>
 	<td width="20%">Ajout d'une demande de réparation suite à une panne sur l'équipement :</td>
 	<td>
-		<select name='equipement'>
+		<select name="equipement">
 		<option value = ""> Sélectionnez l'équipement concerné par la demande </option>
 			<?php
 			foreach($arrayEquip as $ligne)
@@ -26,7 +26,7 @@ if(count($arrayEquip)>0){
 <tr>
 	<td>Type de la panne :</td>
 				<td>
-				<select name='equipement'>
+				<select name="typePanne">
 				<option value =""> Sélectionnez un type de panne </option>
 			<?php
 			
@@ -42,7 +42,7 @@ if(count($arrayEquip)>0){
 <tr>
 	<td>Commentaire sur la panne :</td>
 				<td>
-					<textarea name=commentaire style="resize:vertical;width:300px"> </textarea>
+					<textarea name="commentaire" style="resize:vertical;width:300px"> </textarea>
 				</td>
 </tr>				
 

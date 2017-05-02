@@ -388,6 +388,21 @@ class PdoGsb{
 		}
 		return $laLigne;
 	}
+	
+	/** Ajoute un objet panne, correspondant à une demande de réparation avec
+	* l'idEquipement, le type de panne, le commentaire et la dae courante
+	*
+	* @param $idVisiteur
+	* @param $idEquipement
+	* @param $idTypePanne
+	* @param $commentaire
+	* @param $dateDemande
+	*/
+	public function addReparation($idVisiteur, $idEquipement, $idTypePanne, $commentaire, $dateDemande){
+		$req = "insert into panne(idVisiteur, idEquipement, idTypePanne, commentaire, jourDemande)
+				values ('$idVisiteur', '$idEquipement', '$idTypePanne', '$commentaire', '$dateDemande')";
+		$res = PdoGsb::$monPdo->exec($req);
+	}
 
 	/**
 	 *Obtiens la liste des dossiers de réparation pour l'utilisateur
