@@ -16,11 +16,12 @@ switch($action){
 		include("vues/v_reparationsPersonnesACharge.php");
 		break;
 	case 'ajouter':
-		//TODO
-		?>
-		Cette Page est en cours de construction
-		<?php
 		include("vues/v_ajoutReparation.php");
+		$equipementPanne = $_POST['equipement'];
+		$typePanne = $_POST['typePanne'];
+		$commentaire = $_POST['commentaire'];
+		$dateDemande = date("Y-m-d");
+		$pdo->addReparation($idVisiteur,$equipementPanne,$typePanne,$commentaire,$dateDemande);
 		break;
 	case 'montantGlobal':
 		include("vues/v_reparationsMontantGlobal.php");
