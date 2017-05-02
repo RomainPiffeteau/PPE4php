@@ -367,7 +367,7 @@ class PdoGsb{
 	 *@return un tableau avec les champs 'id' et 'libelle'
 	 */
 	public function getGrade($idVisiteur){
-		$req = "select r.id, r.libelle
+		$req = "select r.id, rtrim(r.libelle) as libelle
 			from visiteur v, rolevisiteur r
 			where v.id ='$idVisiteur' and v.idRole = r.id";
 		$res = PdoGsb::$monPdo->query($req);
@@ -383,11 +383,7 @@ class PdoGsb{
 	 */
 	public function getGradeInferieur($idGrade){
 		if($idGrade > 1){ // si grade > "Visiteur"
-			$req = "select libelle
-				from rolevisiteur
-				where id = ".($idGrade-1);
-			$res = PdoGsb::$monPdo->query($req);
-			$laLigne = $res->fetchAll(PDO::FETCH_ASSOC)[0];
+			return $laLigne = $this->getGrade($idGrade-1);
 		}else{
 			$laLigne['libelle'] = 'GRADE INVALIDE';
 		}
@@ -530,39 +526,59 @@ class PdoGsb{
 	}
 
 	/**
+	*indique si la panne (réparation) a été validé
+	*
+	*@param $idReparation
+	*@return un boolean
+	*/
+	public function estReparationValidee($idReparation){
+		$req = "SELECT dateFinTheorique
+					FROM panne
+					WHERE id=$idReparation";
+		$res = PdoGsb::$monPdo->query($req);
+		$date = $res->fetchAll(PDO::FETCH_ASSOC)[0];
+		return (!is_null($date) && !empty($date));
+	}
+
+	/**
 	*valide une réparation
 	*
-	*@param $idPanne, $dateFinTheorique, $dateFinReelle, $prix, $commentaire
+	*@param $idReparation, $dateFinTheorique, $dateFinReelle, $prix, $commentaire
 	*@return un boolean indique le succès de la requête
 	*/
-	public function validerReparation($idPanne, $dateFinTheorique, $dateFinReelle, $prix, $commentaire){
-		$req = "UPDATE `panne` SET `dateFinTheorique`='".addslashes($dateFinTheorique)."' WHERE `id`=$idPanne";
+	public function majReparation($idReparation, $dateFinTheorique, $dateFinReelle, $prix, $commentaire){
+        if(!$this->estReparationValidee($idReparation)){
+            $req = "UPDATE `panne` SET `jourPriseEnCharge`='".date("Y").'-'.date("m").'-'.date("d")."' WHERE `id`=$idReparation";
+            $req = PdoGSB::$monPdo->exec($req);
+            $nbLineAffect = $req;
+        }
+		$req = "UPDATE `panne` SET `dateFinTheorique`='".addslashes($dateFinTheorique)."' WHERE `id`=$idReparation";
 		$req = PdoGSB::$monPdo->exec($req);
 		$nbLineAffect = $req;
 		if(!empty($dateFinReelle)){
-			$req = "UPDATE `panne` SET `dateFinReelle`='".addslashes($dateFinReelle)."' WHERE `id`=$idPanne";
+			$req = "UPDATE `panne` SET `dateFinReelle`='".addslashes($dateFinReelle)."' WHERE `id`=$idReparation";
 			$req = PdoGSB::$monPdo->exec($req);
 			$nbLineAffect += $req;
 		}else{
-			$req = "UPDATE `panne` SET `dateFinReelle`=NULL WHERE `id`=$idPanne";
+			$req = "UPDATE `panne` SET `dateFinReelle`=NULL WHERE `id`=$idReparation";
 			$req = PdoGSB::$monPdo->exec($req);
 			$nbLineAffect += $req;
 		}
 		if(!empty($prix)){
-			$req = "UPDATE `panne` SET `prix`=$prix WHERE `id`=$idPanne";
+			$req = "UPDATE `panne` SET `prix`=$prix WHERE `id`=$idReparation";
 			$req = PdoGSB::$monPdo->exec($req);
 			$nbLineAffect += $req;
 		}else{
-			$req = "UPDATE `panne` SET `prix`=0 WHERE `id`=$idPanne";
+			$req = "UPDATE `panne` SET `prix`=0 WHERE `id`=$idReparation";
 			$req = PdoGSB::$monPdo->exec($req);
 			$nbLineAffect += $req;
 		}
 		if(!empty($commentaire)){
-			$req = "UPDATE `panne` SET `commentaire`='".addslashes($commentaire)."' WHERE `id`=$idPanne";
+			$req = "UPDATE `panne` SET `commentaire`='".addslashes($commentaire)."' WHERE `id`=$idReparation";
 			$req = PdoGSB::$monPdo->exec($req);
 			$nbLineAffect += $req;
 		}else{
-			$req = "UPDATE `panne` SET `commentaire`='' WHERE `id`=$idPanne";
+			$req = "UPDATE `panne` SET `commentaire`='' WHERE `id`=$idReparation";
 			$req = PdoGSB::$monPdo->exec($req);
 			$nbLineAffect += $req;
 		}

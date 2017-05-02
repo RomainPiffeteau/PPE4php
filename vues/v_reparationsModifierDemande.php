@@ -14,16 +14,20 @@
 			<div style="margin: auto 0;">
 				<table>
 					<tr>
-						<td align="right"><strong>Membre:</strong></td><td><?=$laPanne['nomVisiteur']?> <?=$laPanne['prenomVisiteur']?></td>
+						<td align="right"><strong>Membre:</strong></td>
+                        <td><?=$laPanne['nomVisiteur']?> <?=$laPanne['prenomVisiteur']?></td>
 					</tr>
 					<tr>
-						<td align="right"><strong>Matériel:</strong></td><td><?=$laPanne['nomMateriel']?></td>
+						<td align="right"><strong>Matériel:</strong></td>
+                        <td><?=$laPanne['nomMateriel']?></td>
 					</tr>
 					<tr>
-						<td align="right"><strong>Date de demande:</strong></td><td><?=$laPanne['dateDemande']?></td>
+						<td align="right"><strong>Date de demande:</strong></td>
+                        <td><?=$laPanne['dateDemande']?></td>
 					</tr>
 					<tr>
-						<td align="right"><strong>Type de Panne:</strong></td><td><?=$laPanne['typePanne']?></td>
+						<td align="right"><strong>Type de Panne:</strong></td>
+                        <td><?=$laPanne['typePanne']?></td>
 					</tr>
 				</table>
 			</div>
