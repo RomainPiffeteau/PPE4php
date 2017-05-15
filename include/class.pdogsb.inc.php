@@ -19,8 +19,8 @@ class PdoGsb{
 
       	private static $serveur='sqlsrv:Server=192.168.222.72';
       	private static $bdd='Database=gsbjm';
-      // private static $user='P2017Piffeteau' ;
-         private static $user='P2017Bouchez' ;
+        private static $user='P2017Piffeteau' ;
+      // private static $user='P2017Bouchez' ;
       // private static $user='P2017Bourreau';
       	private static $mdp='Password1';
 		private static $monPdo;
@@ -29,7 +29,7 @@ class PdoGsb{
 		
         // machine virtuelle
         // private static $serveur='dblib:host=192.168.222.72';
-        // private static $bdd='dbname=gsbjm';
+        // private static $bdd='dbname=gsbjmPiffeteau';
 
 
     /*   private static $serveur='mysql:host=localhost';
