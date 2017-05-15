@@ -18,7 +18,7 @@
 class PdoGsb{
 
       	private static $serveur='sqlsrv:Server=192.168.222.72';
-      	private static $bdd='Database=gsbjm';
+      	private static $bdd='Database=gsbjmPiffeteau';
         private static $user='P2017Piffeteau' ;
       // private static $user='P2017Bouchez' ;
       // private static $user='P2017Bourreau';
